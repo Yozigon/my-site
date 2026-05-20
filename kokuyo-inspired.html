@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Curiosity Studio</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fbfaf7;
+        --ink: #161616;
+        --muted: #62615d;
+        --line: #dedbd3;
+        --red: #d73b2f;
+        --green: #34765b;
+        --blue: #2f66a1;
+        --yellow: #f0c94d;
+        --paper: #ffffff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 72px;
+        padding: 0 32px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(251, 250, 247, 0.92);
+        backdrop-filter: blur(16px);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background:
+          linear-gradient(90deg, var(--red) 0 50%, transparent 50%),
+          linear-gradient(0deg, var(--blue) 0 50%, var(--yellow) 50%);
+      }
+
+      .nav {
+        display: flex;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      .nav a {
+        text-decoration: none;
+      }
+
+      .hero {
+        min-height: calc(100svh - 72px);
+        display: grid;
+        align-items: end;
+        padding: 48px 32px 28px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-grid {
+        width: min(1180px, 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 36px;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--red);
+        font-size: 0.86rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin: 0;
+        font-size: clamp(3rem, 9vw, 8.8rem);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+        margin: 24px 0 0;
+        color: var(--muted);
+        font-size: 1.15rem;
+      }
+
+      .hero-visual {
+        width: min(760px, 100%);
+        min-height: 210px;
+        justify-self: end;
+      }
+
+      .hero-visual svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .scroll-hint {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 36px;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .section {
+        width: min(1180px, calc(100% - 64px));
+        margin: 0 auto;
+        padding: 72px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-header {
+        display: grid;
+        grid-template-columns: minmax(160px, 0.36fr) minmax(0, 1fr);
+        gap: 32px;
+        margin-bottom: 34px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .section-lead {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.12rem;
+      }
+
+      .fields {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+
+      .field {
+        min-height: 240px;
+        padding: 24px;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+
+      .field-number {
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 800;
+      }
+
+      .field h3,
+      .news-item h3 {
+        margin: 42px 0 12px;
+        font-size: 1.35rem;
+        line-height: 1.25;
+      }
+
+      .field p,
+      .news-item p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .field:nth-child(1) {
+        border-top: 5px solid var(--red);
+      }
+
+      .field:nth-child(2) {
+        border-top: 5px solid var(--blue);
+      }
+
+      .field:nth-child(3) {
+        border-top: 5px solid var(--green);
+      }
+
+      .field:nth-child(4) {
+        border-top: 5px solid var(--yellow);
+      }
+
+      .story-band {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .story-title {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 5.4rem);
+        line-height: 1;
+      }
+
+      .story-panel {
+        padding: 34px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      .story-panel p {
+        margin: 0 0 20px;
+        color: var(--muted);
+      }
+
+      .text-link {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        color: var(--red);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .news {
+        display: grid;
+        gap: 16px;
+      }
+
+      .news-item {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 28px;
+        padding: 24px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .news-date {
+        color: var(--red);
+        font-weight: 800;
+      }
+
+      .news-item h3 {
+        margin: 0 0 8px;
+      }
+
+      footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 36px 32px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 860px) {
+        .site-header {
+          position: static;
+          padding: 0 20px;
+        }
+
+        .nav {
+          display: none;
+        }
+
+        .hero {
+          min-height: auto;
+          padding: 56px 20px 28px;
+        }
+
+        .section {
+          width: calc(100% - 40px);
+          padding: 54px 0;
+        }
+
+        .section-header,
+        .story-band,
+        .news-item {
+          grid-template-columns: 1fr;
+          gap: 18px;
+        }
+
+        .fields {
+          grid-template-columns: 1fr;
+        }
+
+        .field {
+          min-height: 190px;
+        }
+
+        footer {
+          display: grid;
+          padding: 28px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Curiosity Studio home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Curiosity Studio</span>
+      </a>
+      <nav class="nav" aria-label="ページ内ナビゲーション">
+        <a href="#fields">Fields</a>
+        <a href="#story">Story</a>
+        <a href="#news">News</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Study page inspired by a corporate site</p>
+            <h1 id="hero-title">好奇心から、日々をつくる。</h1>
+            <p class="hero-copy">
+              文具、働く場所、学びの時間。身近な道具と空間を見つめ直し、暮らしの中に小さな発見を増やすためのコンセプトページです。
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <svg viewBox="0 0 760 250" role="img">
+              <rect x="20" y="36" width="180" height="150" rx="8" fill="#ffffff" stroke="#dedbd3"></rect>
+              <rect x="44" y="62" width="132" height="14" fill="#d73b2f"></rect>
+              <rect x="44" y="94" width="90" height="10" fill="#dedbd3"></rect>
+              <rect x="44" y="118" width="118" height="10" fill="#dedbd3"></rect>
+              <path d="M236 196 L318 50 L400 196 Z" fill="#f0c94d" stroke="#161616" stroke-width="2"></path>
+              <rect x="426" y="72" width="150" height="112" rx="8" fill="#2f66a1"></rect>
+              <rect x="450" y="104" width="102" height="16" fill="#ffffff"></rect>
+              <rect x="450" y="136" width="74" height="12" fill="#ffffff" opacity="0.65"></rect>
+              <circle cx="640" cy="128" r="70" fill="#34765b"></circle>
+              <rect x="612" y="82" width="56" height="92" rx="28" fill="#ffffff"></rect>
+              <path d="M0 216 H760" stroke="#161616" stroke-width="2"></path>
+            </svg>
+          </div>
+
+          <div class="scroll-hint">
+            <span>Explore</span>
+            <span>01 / 03</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="fields" aria-labelledby="fields-title">
+        <div class="section-header">
+          <h2 id="fields-title">Fields</h2>
+          <p class="section-lead">
+            ひとつのブランドサイトで複数の事業やテーマを横断して見せる構成を参考に、4つの入口を並べています。
+          </p>
+        </div>
+
+        <div class="fields">
+          <article class="field">
+            <span class="field-number">01</span>
+            <h3>Tools</h3>
+            <p>書く、考える、残す。毎日の作業を支える道具を紹介します。</p>
+          </article>
+          <article class="field">
+            <span class="field-number">02</span>
+            <h3>Workspace</h3>
+            <p>集中と対話が自然に切り替わる場所のあり方を考えます。</p>
+          </article>
+          <article class="field">
+            <span class="field-number">03</span>
+            <h3>Learning</h3>
+            <p>学び方を明るくする習慣、記録、アイデアをまとめます。</p>
+          </article>
+          <article class="field">
+            <span class="field-number">04</span>
+            <h3>Journal</h3>
+            <p>制作ログや気づきを、短い記事として蓄積していきます。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="story" aria-labelledby="story-title">
+        <div class="story-band">
+          <h2 class="story-title" id="story-title">Small ideas, better days.</h2>
+          <div class="story-panel">
+            <p>
+              大きな説明よりも、短い言葉と余白で世界観を伝える練習用のセクションです。公式サイト風の大きな見出しと、読みやすい本文量のバランスを意識しています。
+            </p>
+            <a class="text-link" href="index.html">Back to home <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="news" aria-labelledby="news-title">
+        <div class="section-header">
+          <h2 id="news-title">News</h2>
+          <p class="section-lead">更新情報を時系列で見せるためのシンプルなリストです。</p>
+        </div>
+
+        <div class="news">
+          <article class="news-item">
+            <time class="news-date" datetime="2026-05-20">2026.05.20</time>
+            <div>
+              <h3>コンセプトページを追加しました</h3>
+              <p>コーポレートサイトの構成を参考にしたHTMLページを作成しました。</p>
+            </div>
+          </article>
+          <article class="news-item">
+            <time class="news-date" datetime="2026-05-20">2026.05.20</time>
+            <div>
+              <h3>個人サイトのデザイン検討を開始</h3>
+              <p>余白、タイポグラフィ、事業領域ごとの見せ方を試しています。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Curiosity Studio</span>
+      <span>Unofficial design study page.</span>
+    </footer>
+  </body>
+</html>
