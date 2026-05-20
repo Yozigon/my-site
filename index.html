@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Website | Portfolio</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f4f1ec;
+        --surface: #ffffff;
+        --text: #1f2933;
+        --muted: #5f6b7a;
+        --accent: #2f6f73;
+        --accent-strong: #25585b;
+        --border: #ded8cf;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      a {
+        color: var(--accent-strong);
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.18em;
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 64px 24px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 24px;
+        padding: 56px 0 40px;
+      }
+
+      .label {
+        margin: 0 0 12px;
+        color: var(--accent);
+        font-size: 0.9rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0 0 16px;
+        font-size: clamp(2.25rem, 6vw, 4.5rem);
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 0;
+      }
+
+      .lead {
+        max-width: 680px;
+        color: var(--muted);
+        font-size: 1.2rem;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 10px 16px;
+        border: 1px solid var(--accent);
+        border-radius: 8px;
+        background: var(--accent);
+        color: #ffffff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .button.secondary {
+        background: transparent;
+        color: var(--accent-strong);
+      }
+
+      .section {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        gap: 32px;
+        padding: 32px 0;
+        border-top: 1px solid var(--border);
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .section p,
+      .section li {
+        color: var(--muted);
+      }
+
+      ul {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding-left: 1.2rem;
+      }
+
+      footer {
+        padding: 32px 0 0;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding: 40px 20px;
+        }
+
+        .hero {
+          padding-top: 32px;
+        }
+
+        .section {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero" aria-labelledby="site-title">
+        <div>
+          <p class="label">Personal Website</p>
+          <h1 id="site-title">My Website</h1>
+          <p class="lead">
+            GitHub Pagesで公開している個人サイトです。制作物、学んだこと、活動の記録をまとめていきます。
+          </p>
+          <div class="links" aria-label="主要リンク">
+            <a class="button" href="https://github.com/">GitHub</a>
+            <a class="button secondary" href="mailto:hello@example.com">Contact</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
+        <p>
+          Web制作やプログラミングに関する学習内容を整理しながら、少しずつ更新していくための場所です。
+        </p>
+      </section>
+
+      <section class="section" aria-labelledby="projects-title">
+        <h2 id="projects-title">Projects</h2>
+        <ul>
+          <li>ポートフォリオサイトの作成</li>
+          <li>GitHub Pagesを使った静的サイト公開</li>
+          <li>日々の学習メモや制作ログの追加</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>&copy; 2026 My Website</p>
+      </footer>
+    </main>
+  </body>
+</html>
