@@ -166,3 +166,28 @@ function clamp(value, min, max) {
 function easeOutCubic(value) {
   return 1 - Math.pow(1 - value, 3);
 }
+
+/* ========================================
+   Scroll reveal animation
+======================================== */
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+}, {
+  threshold: 0.12
+});
+
+document.querySelectorAll(`
+  .room-card,
+  .daily-panel,
+  .events,
+  .members,
+  .stats article
+`).forEach((el) => {
+  el.classList.add('fade-up');
+  observer.observe(el);
+});
