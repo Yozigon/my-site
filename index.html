@@ -3,182 +3,144 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Website | Portfolio</title>
-    <style>
-      :root {
-        color-scheme: light;
-        --bg: #f4f1ec;
-        --surface: #ffffff;
-        --text: #1f2933;
-        --muted: #5f6b7a;
-        --accent: #2f6f73;
-        --accent-strong: #25585b;
-        --border: #ded8cf;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        line-height: 1.6;
-        color: var(--text);
-        background: var(--bg);
-      }
-
-      a {
-        color: var(--accent-strong);
-        text-decoration-thickness: 0.08em;
-        text-underline-offset: 0.18em;
-      }
-
-      main {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 64px 24px;
-      }
-
-      .hero {
-        display: grid;
-        gap: 24px;
-        padding: 56px 0 40px;
-      }
-
-      .label {
-        margin: 0 0 12px;
-        color: var(--accent);
-        font-size: 0.9rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        margin: 0 0 16px;
-        font-size: clamp(2.25rem, 6vw, 4.5rem);
-        line-height: 1.2;
-      }
-
-      p {
-        margin: 0;
-      }
-
-      .lead {
-        max-width: 680px;
-        color: var(--muted);
-        font-size: 1.2rem;
-      }
-
-      .links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 28px;
-      }
-
-      .button {
-        display: inline-flex;
-        align-items: center;
-        min-height: 44px;
-        padding: 10px 16px;
-        border: 1px solid var(--accent);
-        border-radius: 8px;
-        background: var(--accent);
-        color: #ffffff;
-        font-weight: 700;
-        text-decoration: none;
-      }
-
-      .button.secondary {
-        background: transparent;
-        color: var(--accent-strong);
-      }
-
-      .section {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-        gap: 32px;
-        padding: 32px 0;
-        border-top: 1px solid var(--border);
-      }
-
-      h2 {
-        margin: 0;
-        font-size: 1rem;
-      }
-
-      .section p,
-      .section li {
-        color: var(--muted);
-      }
-
-      ul {
-        display: grid;
-        gap: 10px;
-        margin: 0;
-        padding-left: 1.2rem;
-      }
-
-      footer {
-        padding: 32px 0 0;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.95rem;
-      }
-
-      @media (max-width: 720px) {
-        main {
-          padding: 40px 20px;
-        }
-
-        .hero {
-          padding-top: 32px;
-        }
-
-        .section {
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-      }
-    </style>
+    <title>Komorebi Members</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Komorebi Members ホーム">
+        <span class="brand-mark" aria-hidden="true">K</span>
+        <span>Komorebi Members</span>
+      </a>
+      <nav class="nav" aria-label="メインメニュー">
+        <a href="#today">今日</a>
+        <a href="#rooms">ルーム</a>
+        <a href="#events">イベント</a>
+        <a href="#members">メンバー</a>
+      </nav>
+      <a class="header-action" href="#join">参加する</a>
+    </header>
+
     <main>
       <section class="hero" aria-labelledby="site-title">
-        <div>
-          <p class="label">Personal Website</p>
-          <h1 id="site-title">My Website</h1>
+        <div class="hero-content">
+          <p class="eyebrow">Members-only community</p>
+          <h1 id="site-title">毎日ふらっと立ち寄れる、あたたかな会員コミュニティ。</h1>
           <p class="lead">
-           
+            学び、雑談、イベント、制作ログをひとつの場所に。ほどよい距離感でつながれる会員専用スペースです。
           </p>
-          <div class="links" aria-label="主要リンク">
-            <a class="button" href="https://github.com/">GitHub</a>
-            <a class="button secondary" href="mailto:hello@example.com">Contact</a>
+          <div class="hero-actions" id="join">
+            <a class="button primary" href="#rooms">ルームを見る</a>
+            <a class="button secondary" href="#events">今週の予定</a>
+          </div>
+        </div>
+
+        <aside class="daily-panel" aria-label="今日のコミュニティ情報" id="today">
+          <div class="panel-topline">
+            <span>Today</span>
+            <strong>5月21日</strong>
+          </div>
+          <h2>朝のチェックイン</h2>
+          <p>今日のひとことを書いて、作業前にゆるく顔を出しましょう。</p>
+          <div class="member-row" aria-label="参加中のメンバー">
+            <span class="avatar avatar-one">A</span>
+            <span class="avatar avatar-two">M</span>
+            <span class="avatar avatar-three">S</span>
+            <span class="avatar avatar-four">T</span>
+            <span class="more-members">+18</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="stats" aria-label="コミュニティの状況">
+        <article>
+          <strong>248</strong>
+          <span>アクティブメンバー</span>
+        </article>
+        <article>
+          <strong>36</strong>
+          <span>今月の投稿</span>
+        </article>
+        <article>
+          <strong>12</strong>
+          <span>開催予定イベント</span>
+        </article>
+      </section>
+
+      <section class="section-heading" aria-labelledby="rooms-title">
+        <p class="eyebrow">Community rooms</p>
+        <h2 id="rooms-title">気分に合わせて入れるルーム</h2>
+      </section>
+
+      <section class="room-grid" id="rooms" aria-label="コミュニティルーム一覧">
+        <article class="room-card">
+          <span class="room-icon">01</span>
+          <h3>ラウンジ</h3>
+          <p>近況報告やちょっとした相談を気軽に投稿できます。</p>
+        </article>
+        <article class="room-card">
+          <span class="room-icon">02</span>
+          <h3>学びのノート</h3>
+          <p>読んだ記事、試したこと、気づきをメンバーと共有します。</p>
+        </article>
+        <article class="room-card">
+          <span class="room-icon">03</span>
+          <h3>制作ログ</h3>
+          <p>進捗や作品を見せ合い、次の一歩につながる反応をもらえます。</p>
+        </article>
+      </section>
+
+      <section class="split-section">
+        <div class="events" id="events" aria-labelledby="events-title">
+          <div class="section-heading compact">
+            <p class="eyebrow">Upcoming</p>
+            <h2 id="events-title">今週のイベント</h2>
+          </div>
+          <ul class="event-list">
+            <li>
+              <time datetime="2026-05-22">5/22</time>
+              <span>もくもく作業会</span>
+              <strong>20:00</strong>
+            </li>
+            <li>
+              <time datetime="2026-05-24">5/24</time>
+              <span>新メンバー歓迎トーク</span>
+              <strong>11:00</strong>
+            </li>
+            <li>
+              <time datetime="2026-05-27">5/27</time>
+              <span>月末ふりかえり会</span>
+              <strong>19:30</strong>
+            </li>
+          </ul>
+        </div>
+
+        <div class="members" id="members" aria-labelledby="members-title">
+          <div class="section-heading compact">
+            <p class="eyebrow">Members</p>
+            <h2 id="members-title">最近の投稿</h2>
+          </div>
+          <div class="post-preview">
+            <span class="avatar avatar-two">M</span>
+            <div>
+              <h3>週末に試したワークフローを共有しました</h3>
+              <p>テンプレート化すると続けやすくなりそう、という話で盛り上がっています。</p>
+            </div>
+          </div>
+          <div class="post-preview">
+            <span class="avatar avatar-three">S</span>
+            <div>
+              <h3>朝活ルームに新しい目標が追加されました</h3>
+              <p>15分だけでも参加できる、短めのチェックインです。</p>
+            </div>
           </div>
         </div>
       </section>
-
-      <section class="section" aria-labelledby="about-title">
-        <h2 id="about-title">About</h2>
-        <p>
-          Web制作やプログラミングに関する学習内容を整理しながら、少しずつ更新していくための場所です。
-        </p>
-      </section>
-
-      <section class="section" aria-labelledby="projects-title">
-        <h2 id="projects-title">Projects</h2>
-        <ul>
-          <li>ポートフォリオサイトの作成</li>
-          <li>GitHub Pagesを使った静的サイト公開</li>
-          <li>日々の学習メモや制作ログの追加</li>
-        </ul>
-      </section>
-
-      <footer>
-        <p>&copy; 2026 My Website</p>
-      </footer>
     </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 Komorebi Members</p>
+      <a href="#">会員ガイド</a>
+    </footer>
   </body>
 </html>
