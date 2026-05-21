@@ -318,6 +318,67 @@ h1 {
   margin-bottom: 76px;
 }
 
+.sphinx-stage {
+  position: relative;
+  left: 50%;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 0.55fr);
+  gap: 32px;
+  align-items: center;
+  width: 100vw;
+  min-height: 560px;
+  margin: 0 0 72px -50vw;
+  padding: 56px max(24px, calc((100vw - 1120px) / 2));
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(31, 95, 75, 0.92), rgba(47, 125, 98, 0.7)),
+    #1f5f4b;
+}
+
+.sphinx-stage::before {
+  position: absolute;
+  inset: auto 0 0;
+  height: 34%;
+  content: "";
+  background:
+    linear-gradient(90deg, transparent, rgba(240, 184, 79, 0.38), transparent),
+    linear-gradient(180deg, transparent, rgba(21, 54, 45, 0.58));
+}
+
+.sphinx-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 420px;
+  color: #ffffff;
+}
+
+.sphinx-copy .eyebrow {
+  color: #ffd782;
+}
+
+.sphinx-copy h2 {
+  margin-bottom: 16px;
+  font-size: 3.25rem;
+  line-height: 1.1;
+}
+
+.sphinx-copy p:last-child {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.sphinx-canvas {
+  position: relative;
+  z-index: 1;
+  min-height: 460px;
+}
+
+.sphinx-canvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .stats article,
 .room-card,
 .events,
@@ -478,7 +539,8 @@ h1 {
   }
 
   .hero,
-  .split-section {
+  .split-section,
+  .sphinx-stage {
     grid-template-columns: 1fr;
   }
 
@@ -502,6 +564,22 @@ h1 {
   .stats,
   .room-grid {
     grid-template-columns: 1fr;
+  }
+
+  .sphinx-stage {
+    min-height: 720px;
+  }
+
+  .sphinx-copy {
+    max-width: 620px;
+  }
+
+  .sphinx-copy h2 {
+    font-size: 2.5rem;
+  }
+
+  .sphinx-canvas {
+    min-height: 420px;
   }
 }
 
@@ -528,6 +606,19 @@ h1 {
 
   .section-heading h2 {
     font-size: 1.85rem;
+  }
+
+  .sphinx-stage {
+    min-height: 660px;
+    padding: 40px 16px;
+  }
+
+  .sphinx-copy h2 {
+    font-size: 2rem;
+  }
+
+  .sphinx-canvas {
+    min-height: 360px;
   }
 
   .daily-panel,
