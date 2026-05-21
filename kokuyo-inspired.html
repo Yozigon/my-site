@@ -3,31 +3,60 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Curiosity Studio</title>
+    <title>Kinetic Fragrance Film</title>
     <style>
       :root {
-        color-scheme: light;
-        --bg: #fbfaf7;
-        --ink: #161616;
-        --muted: #62615d;
-        --line: #dedbd3;
-        --red: #d73b2f;
-        --green: #34765b;
-        --blue: #2f66a1;
-        --yellow: #f0c94d;
-        --paper: #ffffff;
+        color-scheme: dark;
+        --bg: #060608;
+        --ink: #f7f3ea;
+        --muted: #b7afa6;
+        --red: #e5202a;
+        --gold: #d8a84d;
+        --blue: #335f99;
+        --green: #2e7b62;
+        --line: rgba(247, 243, 234, 0.18);
+        --panel: rgba(255, 255, 255, 0.08);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        min-width: 320px;
+        font-family: "Arial Black", "Noto Sans JP", system-ui, sans-serif;
         color: var(--ink);
         background: var(--bg);
-        line-height: 1.6;
+        line-height: 1.65;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        content: "";
+        background:
+          linear-gradient(115deg, rgba(229, 32, 42, 0.18), transparent 36%),
+          linear-gradient(245deg, rgba(51, 95, 153, 0.22), transparent 42%),
+          #060608;
+      }
+
+      body::after {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        content: "";
+        background-image:
+          linear-gradient(rgba(247, 243, 234, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(247, 243, 234, 0.05) 1px, transparent 1px);
+        background-size: 72px 72px;
+        animation: grid-shift 9s steps(8) infinite;
       }
 
       a {
@@ -35,411 +64,714 @@
       }
 
       .site-header {
-        position: sticky;
+        position: fixed;
         top: 0;
-        z-index: 10;
+        left: 0;
+        z-index: 20;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
+        gap: 20px;
+        width: 100%;
         min-height: 72px;
-        padding: 0 32px;
+        padding: 0 28px;
         border-bottom: 1px solid var(--line);
-        background: rgba(251, 250, 247, 0.92);
-        backdrop-filter: blur(16px);
+        background: rgba(6, 6, 8, 0.72);
+        backdrop-filter: blur(18px);
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        font-weight: 800;
+        gap: 12px;
+        font-weight: 900;
         text-decoration: none;
+        text-transform: uppercase;
       }
 
       .brand-mark {
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        background:
-          linear-gradient(90deg, var(--red) 0 50%, transparent 50%),
-          linear-gradient(0deg, var(--blue) 0 50%, var(--yellow) 50%);
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        color: #060608;
+        background: var(--ink);
+        font-size: 0.85rem;
+        transform: rotate(-8deg);
       }
 
       .nav {
         display: flex;
-        gap: 22px;
+        gap: 18px;
         color: var(--muted);
-        font-size: 0.95rem;
+        font-family: system-ui, sans-serif;
+        font-size: 0.9rem;
       }
 
       .nav a {
         text-decoration: none;
       }
 
-      .hero {
-        min-height: calc(100svh - 72px);
-        display: grid;
-        align-items: end;
-        padding: 48px 32px 28px;
-        border-bottom: 1px solid var(--line);
+      .nav a:hover {
+        color: var(--ink);
       }
 
-      .hero-grid {
-        width: min(1180px, 100%);
-        margin: 0 auto;
+      main {
+        overflow: hidden;
+      }
+
+      .film-hero {
+        position: relative;
+        min-height: 100svh;
+        padding: 118px 28px 34px;
+        overflow: hidden;
+      }
+
+      .film-stage {
+        position: absolute;
+        inset: 72px 0 0;
+        overflow: hidden;
+      }
+
+      .flash-panel {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background: var(--ink);
+        mix-blend-mode: difference;
+        animation: flash-cut 8.4s steps(1) infinite;
+      }
+
+      .slash {
+        position: absolute;
+        width: 34vw;
+        min-width: 220px;
+        height: 118vh;
+        top: -8vh;
+        background: var(--red);
+        transform: skewX(-18deg) translateX(-120%);
+        opacity: 0.86;
+        animation: slash-run 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+      }
+
+      .slash.two {
+        width: 18vw;
+        min-width: 150px;
+        background: var(--gold);
+        animation-delay: 1.1s;
+        animation-duration: 5.4s;
+      }
+
+      .ribbon {
+        position: absolute;
+        left: 50%;
+        top: 48%;
+        width: 66vw;
+        min-width: 520px;
+        height: 26px;
+        border: 2px solid rgba(247, 243, 234, 0.55);
+        border-left: 0;
+        border-right: 0;
+        transform-origin: left center;
+        animation: ribbon-whip 3.2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+      }
+
+      .ribbon::before,
+      .ribbon::after {
+        position: absolute;
+        inset: 8px 0 auto;
+        height: 3px;
+        content: "";
+        background: var(--red);
+      }
+
+      .ribbon::after {
+        inset: auto 0 8px;
+        background: var(--gold);
+      }
+
+      .kinetic-person {
+        position: absolute;
+        left: 50%;
+        bottom: 12%;
+        width: 190px;
+        height: 430px;
+        transform: translateX(-50%);
+        animation: body-thrash 2.1s cubic-bezier(0.73, 0, 0.27, 1) infinite;
+      }
+
+      .head,
+      .torso,
+      .arm,
+      .leg {
+        position: absolute;
+        background: var(--ink);
+        box-shadow: 12px 10px 0 rgba(229, 32, 42, 0.72);
+      }
+
+      .head {
+        left: 64px;
+        top: 0;
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        animation: head-snap 2.1s steps(4) infinite;
+      }
+
+      .torso {
+        left: 72px;
+        top: 66px;
+        width: 48px;
+        height: 156px;
+        border-radius: 26px 26px 18px 18px;
+        transform-origin: center top;
+        animation: torso-bend 2.1s cubic-bezier(0.73, 0, 0.27, 1) infinite;
+      }
+
+      .arm {
+        left: 88px;
+        top: 84px;
+        width: 28px;
+        height: 150px;
+        border-radius: 18px;
+        transform-origin: 50% 12px;
+      }
+
+      .arm.left {
+        animation: left-arm 1.4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+      }
+
+      .arm.right {
+        animation: right-arm 1.4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+      }
+
+      .leg {
+        left: 84px;
+        top: 204px;
+        width: 30px;
+        height: 180px;
+        border-radius: 18px;
+        transform-origin: 50% 14px;
+      }
+
+      .leg.left {
+        animation: left-leg 1.85s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+      }
+
+      .leg.right {
+        animation: right-leg 1.85s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+      }
+
+      .burst {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: var(--ink);
+        transform: rotate(45deg);
+        opacity: 0;
+        animation: burst-out 3.8s linear infinite;
+      }
+
+      .burst:nth-child(1) { left: 12%; top: 20%; background: var(--red); animation-delay: 0s; }
+      .burst:nth-child(2) { left: 82%; top: 26%; background: var(--gold); animation-delay: 0.35s; }
+      .burst:nth-child(3) { left: 28%; top: 74%; background: var(--blue); animation-delay: 0.72s; }
+      .burst:nth-child(4) { left: 70%; top: 68%; background: var(--green); animation-delay: 1.08s; }
+      .burst:nth-child(5) { left: 46%; top: 18%; background: var(--ink); animation-delay: 1.44s; }
+      .burst:nth-child(6) { left: 8%; top: 58%; background: var(--gold); animation-delay: 1.82s; }
+
+      .hero-copy {
+        position: relative;
+        z-index: 3;
         display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 36px;
+        align-content: end;
+        min-height: calc(100svh - 152px);
+        width: min(1160px, 100%);
+        margin: 0 auto;
       }
 
       .eyebrow {
-        margin: 0 0 18px;
-        color: var(--red);
+        margin: 0 0 14px;
+        color: var(--gold);
+        font-family: system-ui, sans-serif;
         font-size: 0.86rem;
-        font-weight: 800;
-        letter-spacing: 0.08em;
+        font-weight: 900;
+        letter-spacing: 0;
         text-transform: uppercase;
       }
 
       h1 {
-        max-width: 980px;
+        max-width: 900px;
         margin: 0;
-        font-size: clamp(3rem, 9vw, 8.8rem);
-        line-height: 0.95;
+        font-size: 7.6rem;
+        line-height: 0.86;
         letter-spacing: 0;
+        text-transform: uppercase;
+        text-shadow: 8px 8px 0 rgba(229, 32, 42, 0.72);
+        animation: title-jolt 2.4s steps(2) infinite;
       }
 
-      .hero-copy {
-        max-width: 620px;
-        margin: 24px 0 0;
+      .lead {
+        max-width: 640px;
+        margin: 26px 0 0;
         color: var(--muted);
-        font-size: 1.15rem;
+        font-family: system-ui, sans-serif;
+        font-size: 1.06rem;
       }
 
-      .hero-visual {
-        width: min(760px, 100%);
-        min-height: 210px;
-        justify-self: end;
-      }
-
-      .hero-visual svg {
-        display: block;
-        width: 100%;
-        height: auto;
-      }
-
-      .scroll-hint {
+      .hero-actions {
         display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        margin-top: 36px;
-        color: var(--muted);
-        font-size: 0.9rem;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 10px 18px;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.1);
+        font-family: system-ui, sans-serif;
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        color: #060608;
+        background: var(--ink);
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .ticker {
+        display: flex;
+        gap: 40px;
+        padding: 16px 0;
+        overflow: hidden;
+        border-block: 1px solid var(--line);
+        color: var(--red);
+        background: var(--ink);
+        font-size: 1.3rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .ticker-track {
+        display: flex;
+        flex: 0 0 auto;
+        gap: 40px;
+        min-width: 100%;
+        animation: ticker-slide 15s linear infinite;
       }
 
       .section {
-        width: min(1180px, calc(100% - 64px));
+        width: min(1160px, calc(100% - 48px));
         margin: 0 auto;
-        padding: 72px 0;
+        padding: 88px 0;
         border-bottom: 1px solid var(--line);
       }
 
       .section-header {
         display: grid;
-        grid-template-columns: minmax(160px, 0.36fr) minmax(0, 1fr);
+        grid-template-columns: minmax(160px, 0.34fr) minmax(0, 1fr);
         gap: 32px;
-        margin-bottom: 34px;
+        margin-bottom: 36px;
       }
 
       h2 {
         margin: 0;
         font-size: 1rem;
+        text-transform: uppercase;
       }
 
       .section-lead {
-        max-width: 720px;
+        max-width: 760px;
         margin: 0;
         color: var(--muted);
+        font-family: system-ui, sans-serif;
         font-size: 1.12rem;
       }
 
-      .fields {
+      .motion-grid {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(4, 1fr);
         border-top: 1px solid var(--line);
         border-left: 1px solid var(--line);
       }
 
-      .field {
-        min-height: 240px;
+      .motion-card {
+        min-height: 260px;
         padding: 24px;
         border-right: 1px solid var(--line);
         border-bottom: 1px solid var(--line);
-        background: var(--paper);
+        background: var(--panel);
       }
 
-      .field-number {
-        color: var(--muted);
-        font-size: 0.82rem;
-        font-weight: 800;
+      .motion-card span {
+        color: var(--gold);
+        font-size: 0.8rem;
+        font-weight: 900;
       }
 
-      .field h3,
-      .news-item h3 {
-        margin: 42px 0 12px;
-        font-size: 1.35rem;
-        line-height: 1.25;
+      .motion-card h3 {
+        margin: 58px 0 12px;
+        font-size: 1.5rem;
+        line-height: 1.1;
+        text-transform: uppercase;
       }
 
-      .field p,
-      .news-item p {
+      .motion-card p {
         margin: 0;
         color: var(--muted);
+        font-family: system-ui, sans-serif;
       }
 
-      .field:nth-child(1) {
-        border-top: 5px solid var(--red);
-      }
-
-      .field:nth-child(2) {
-        border-top: 5px solid var(--blue);
-      }
-
-      .field:nth-child(3) {
-        border-top: 5px solid var(--green);
-      }
-
-      .field:nth-child(4) {
-        border-top: 5px solid var(--yellow);
-      }
-
-      .story-band {
+      .credit-band {
         display: grid;
         grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-        gap: 40px;
+        gap: 36px;
         align-items: center;
       }
 
-      .story-title {
+      .credit-title {
         margin: 0;
-        font-size: clamp(2rem, 5vw, 5.4rem);
-        line-height: 1;
+        font-size: 4.8rem;
+        line-height: 0.95;
+        text-transform: uppercase;
       }
 
-      .story-panel {
-        padding: 34px;
+      .credit-panel {
+        padding: 28px;
         border: 1px solid var(--line);
-        border-radius: 8px;
-        background: var(--paper);
+        background: rgba(255, 255, 255, 0.08);
+        font-family: system-ui, sans-serif;
       }
 
-      .story-panel p {
-        margin: 0 0 20px;
+      .credit-panel p {
+        margin: 0 0 18px;
         color: var(--muted);
       }
 
       .text-link {
         display: inline-flex;
-        gap: 10px;
         align-items: center;
-        color: var(--red);
-        font-weight: 800;
+        gap: 10px;
+        color: var(--gold);
+        font-weight: 900;
         text-decoration: none;
-      }
-
-      .news {
-        display: grid;
-        gap: 16px;
-      }
-
-      .news-item {
-        display: grid;
-        grid-template-columns: 150px minmax(0, 1fr);
-        gap: 28px;
-        padding: 24px 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .news-date {
-        color: var(--red);
-        font-weight: 800;
-      }
-
-      .news-item h3 {
-        margin: 0 0 8px;
       }
 
       footer {
         display: flex;
         justify-content: space-between;
         gap: 24px;
-        padding: 36px 32px;
+        padding: 34px 28px;
         color: var(--muted);
+        font-family: system-ui, sans-serif;
         font-size: 0.92rem;
+      }
+
+      @keyframes grid-shift {
+        50% { transform: translate3d(-36px, 36px, 0); }
+      }
+
+      @keyframes flash-cut {
+        0%, 12%, 100% { opacity: 0; }
+        13%, 14%, 42%, 43%, 76%, 77% { opacity: 0.82; }
+      }
+
+      @keyframes slash-run {
+        0% { transform: skewX(-18deg) translateX(-135%); }
+        42%, 54% { transform: skewX(-18deg) translateX(130%); }
+        100% { transform: skewX(-18deg) translateX(130%); }
+      }
+
+      @keyframes ribbon-whip {
+        0% { transform: translate(-50%, -50%) rotate(-18deg) scaleX(0.2); opacity: 0; }
+        25% { opacity: 1; }
+        48% { transform: translate(-50%, -50%) rotate(14deg) scaleX(1.12); }
+        72% { transform: translate(-50%, -50%) rotate(-8deg) scaleX(0.64); opacity: 0.78; }
+        100% { transform: translate(-50%, -50%) rotate(22deg) scaleX(0); opacity: 0; }
+      }
+
+      @keyframes body-thrash {
+        0%, 100% { transform: translateX(-50%) rotate(-4deg) translateY(0); }
+        24% { transform: translateX(-50%) rotate(18deg) translateY(-22px); }
+        42% { transform: translateX(-50%) rotate(-22deg) translateY(18px); }
+        62% { transform: translateX(-50%) rotate(10deg) translateY(-34px); }
+        82% { transform: translateX(-50%) rotate(-12deg) translateY(10px); }
+      }
+
+      @keyframes head-snap {
+        0%, 100% { transform: translateX(0) rotate(0); }
+        25% { transform: translateX(-34px) rotate(-18deg); }
+        50% { transform: translateX(26px) rotate(20deg); }
+        75% { transform: translateX(-10px) rotate(-10deg); }
+      }
+
+      @keyframes torso-bend {
+        0%, 100% { transform: rotate(0); }
+        32% { transform: rotate(-28deg); }
+        58% { transform: rotate(24deg); }
+        78% { transform: rotate(-16deg); }
+      }
+
+      @keyframes left-arm {
+        0%, 100% { transform: rotate(118deg); }
+        28% { transform: rotate(-96deg); }
+        58% { transform: rotate(154deg); }
+        78% { transform: rotate(-36deg); }
+      }
+
+      @keyframes right-arm {
+        0%, 100% { transform: rotate(-116deg); }
+        28% { transform: rotate(84deg); }
+        58% { transform: rotate(-154deg); }
+        78% { transform: rotate(46deg); }
+      }
+
+      @keyframes left-leg {
+        0%, 100% { transform: rotate(20deg); }
+        34% { transform: rotate(-72deg); }
+        62% { transform: rotate(56deg); }
+      }
+
+      @keyframes right-leg {
+        0%, 100% { transform: rotate(-18deg); }
+        34% { transform: rotate(78deg); }
+        62% { transform: rotate(-58deg); }
+      }
+
+      @keyframes burst-out {
+        0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(45deg) scale(0.2); }
+        12% { opacity: 1; }
+        62% { opacity: 0.8; }
+        100% { opacity: 0; transform: translate3d(90px, -150px, 0) rotate(540deg) scale(2.2); }
+      }
+
+      @keyframes title-jolt {
+        0%, 100% { transform: translate3d(0, 0, 0); }
+        20% { transform: translate3d(-8px, 5px, 0); }
+        42% { transform: translate3d(7px, -4px, 0); }
+        68% { transform: translate3d(-3px, -6px, 0); }
+      }
+
+      @keyframes ticker-slide {
+        to { transform: translateX(calc(-100% - 40px)); }
       }
 
       @media (max-width: 860px) {
         .site-header {
-          position: static;
-          padding: 0 20px;
+          padding: 0 18px;
         }
 
         .nav {
           display: none;
         }
 
-        .hero {
-          min-height: auto;
-          padding: 56px 20px 28px;
+        .film-hero {
+          padding-inline: 18px;
+        }
+
+        h1 {
+          font-size: 4.2rem;
+        }
+
+        .kinetic-person {
+          bottom: 18%;
+          transform: translateX(-50%) scale(0.82);
         }
 
         .section {
-          width: calc(100% - 40px);
-          padding: 54px 0;
+          width: calc(100% - 36px);
+          padding: 64px 0;
         }
 
         .section-header,
-        .story-band,
-        .news-item {
-          grid-template-columns: 1fr;
-          gap: 18px;
-        }
-
-        .fields {
+        .credit-band {
           grid-template-columns: 1fr;
         }
 
-        .field {
-          min-height: 190px;
+        .motion-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .credit-title {
+          font-size: 3.2rem;
         }
 
         footer {
           display: grid;
-          padding: 28px 20px;
+          padding: 28px 18px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        h1 {
+          font-size: 3.05rem;
+        }
+
+        .lead {
+          font-size: 1rem;
+        }
+
+        .kinetic-person {
+          left: 58%;
+          transform: translateX(-50%) scale(0.72);
+        }
+
+        .ribbon {
+          min-width: 360px;
+        }
+
+        .motion-card {
+          min-height: 220px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.001ms !important;
         }
       }
     </style>
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Curiosity Studio home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Curiosity Studio</span>
+      <a class="brand" href="index.html" aria-label="Kinetic Fragrance Film home">
+        <span class="brand-mark" aria-hidden="true">KF</span>
+        <span>Kinetic Fragrance Film</span>
       </a>
       <nav class="nav" aria-label="ページ内ナビゲーション">
-        <a href="#fields">Fields</a>
-        <a href="#story">Story</a>
-        <a href="#news">News</a>
+        <a href="#movement">Movement</a>
+        <a href="#reference">Reference</a>
+        <a href="#credits">Credits</a>
       </nav>
     </header>
 
     <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-grid">
-          <div>
-            <p class="eyebrow">Study page inspired by a corporate site</p>
-            <h1 id="hero-title">好奇心から、日々をつくる。</h1>
-            <p class="hero-copy">
-              文具、働く場所、学びの時間。身近な道具と空間を見つめ直し、暮らしの中に小さな発見を増やすためのコンセプトページです。
-            </p>
+      <section class="film-hero" aria-labelledby="hero-title">
+        <div class="film-stage" aria-hidden="true">
+          <div class="flash-panel"></div>
+          <div class="slash"></div>
+          <div class="slash two"></div>
+          <div class="ribbon"></div>
+          <div class="kinetic-person">
+            <span class="head"></span>
+            <span class="torso"></span>
+            <span class="arm left"></span>
+            <span class="arm right"></span>
+            <span class="leg left"></span>
+            <span class="leg right"></span>
           </div>
+          <span class="burst"></span>
+          <span class="burst"></span>
+          <span class="burst"></span>
+          <span class="burst"></span>
+          <span class="burst"></span>
+          <span class="burst"></span>
+        </div>
 
-          <div class="hero-visual" aria-hidden="true">
-            <svg viewBox="0 0 760 250" role="img">
-              <rect x="20" y="36" width="180" height="150" rx="8" fill="#ffffff" stroke="#dedbd3"></rect>
-              <rect x="44" y="62" width="132" height="14" fill="#d73b2f"></rect>
-              <rect x="44" y="94" width="90" height="10" fill="#dedbd3"></rect>
-              <rect x="44" y="118" width="118" height="10" fill="#dedbd3"></rect>
-              <path d="M236 196 L318 50 L400 196 Z" fill="#f0c94d" stroke="#161616" stroke-width="2"></path>
-              <rect x="426" y="72" width="150" height="112" rx="8" fill="#2f66a1"></rect>
-              <rect x="450" y="104" width="102" height="16" fill="#ffffff"></rect>
-              <rect x="450" y="136" width="74" height="12" fill="#ffffff" opacity="0.65"></rect>
-              <circle cx="640" cy="128" r="70" fill="#34765b"></circle>
-              <rect x="612" y="82" width="56" height="92" rx="28" fill="#ffffff"></rect>
-              <path d="M0 216 H760" stroke="#161616" stroke-width="2"></path>
-            </svg>
-          </div>
-
-          <div class="scroll-hint">
-            <span>Explore</span>
-            <span>01 / 03</span>
+        <div class="hero-copy">
+          <p class="eyebrow">Perfume commercial study</p>
+          <h1 id="hero-title">Break the elegant silence.</h1>
+          <p class="lead">
+            静かな会場から突然はじけ出す身体表現、予測不能なカット、香りが空間を切り裂くようなスピード感を、Webページ上のモーションとして再構成しました。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#movement">モーションを見る</a>
+            <a class="button" href="#reference">参考メモ</a>
           </div>
         </div>
       </section>
 
-      <section class="section" id="fields" aria-labelledby="fields-title">
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Impulse</span>
+          <span>Fragrance</span>
+          <span>Gesture</span>
+          <span>Red Cut</span>
+          <span>Wild Grace</span>
+        </div>
+        <div class="ticker-track">
+          <span>Impulse</span>
+          <span>Fragrance</span>
+          <span>Gesture</span>
+          <span>Red Cut</span>
+          <span>Wild Grace</span>
+        </div>
+      </div>
+
+      <section class="section" id="movement" aria-labelledby="movement-title">
         <div class="section-header">
-          <h2 id="fields-title">Fields</h2>
+          <h2 id="movement-title">Movement</h2>
           <p class="section-lead">
-            ひとつのブランドサイトで複数の事業やテーマを横断して見せる構成を参考に、4つの入口を並べています。
+            上品さを保ったまま、急に暴れる。香水広告らしい余白と、ミュージックビデオのような衝撃を同居させるための演出要素です。
           </p>
         </div>
 
-        <div class="fields">
-          <article class="field">
-            <span class="field-number">01</span>
-            <h3>Tools</h3>
-            <p>書く、考える、残す。毎日の作業を支える道具を紹介します。</p>
+        <div class="motion-grid">
+          <article class="motion-card">
+            <span>01</span>
+            <h3>Flash cut</h3>
+            <p>一瞬だけ画面を反転させ、まばたきのような強い切り替えを入れています。</p>
           </article>
-          <article class="field">
-            <span class="field-number">02</span>
-            <h3>Workspace</h3>
-            <p>集中と対話が自然に切り替わる場所のあり方を考えます。</p>
+          <article class="motion-card">
+            <span>02</span>
+            <h3>Body snap</h3>
+            <p>シルエットの頭、腕、脚を別々に振り、制御不能なダンスの勢いを出しています。</p>
           </article>
-          <article class="field">
-            <span class="field-number">03</span>
-            <h3>Learning</h3>
-            <p>学び方を明るくする習慣、記録、アイデアをまとめます。</p>
+          <article class="motion-card">
+            <span>03</span>
+            <h3>Color slash</h3>
+            <p>赤と金の大きな面が横切ることで、香りの軌跡や衝動を視覚化しています。</p>
           </article>
-          <article class="field">
-            <span class="field-number">04</span>
-            <h3>Journal</h3>
-            <p>制作ログや気づきを、短い記事として蓄積していきます。</p>
+          <article class="motion-card">
+            <span>04</span>
+            <h3>Broken stage</h3>
+            <p>整ったグリッドの上で動きだけが暴れる構成にし、上品さと破壊力を両立させています。</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="story" aria-labelledby="story-title">
-        <div class="story-band">
-          <h2 class="story-title" id="story-title">Small ideas, better days.</h2>
-          <div class="story-panel">
+      <section class="section" id="reference" aria-labelledby="reference-title">
+        <div class="credit-band">
+          <h2 class="credit-title" id="reference-title">A wild note for a fragrance film.</h2>
+          <div class="credit-panel">
             <p>
-              大きな説明よりも、短い言葉と余白で世界観を伝える練習用のセクションです。公式サイト風の大きな見出しと、読みやすい本文量のバランスを意識しています。
+              参考にしたのは、Margaret Qualley が出演した KENZO WORLD の香水CMにある、エレガントな場から激しい身体表現へ飛び込むコントラストです。
             </p>
-            <a class="text-link" href="index.html">Back to home <span aria-hidden="true">→</span></a>
+            <p>
+              このページでは既存映像の再現ではなく、Web用に抽象化したオリジナルの動きとして表現しています。
+            </p>
+            <a class="text-link" href="index.html">Back to community <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
 
-      <section class="section" id="news" aria-labelledby="news-title">
+      <section class="section" id="credits" aria-labelledby="credits-title">
         <div class="section-header">
-          <h2 id="news-title">News</h2>
-          <p class="section-lead">更新情報を時系列で見せるためのシンプルなリストです。</p>
-        </div>
-
-        <div class="news">
-          <article class="news-item">
-            <time class="news-date" datetime="2026-05-20">2026.05.20</time>
-            <div>
-              <h3>コンセプトページを追加しました</h3>
-              <p>コーポレートサイトの構成を参考にしたHTMLページを作成しました。</p>
-            </div>
-          </article>
-          <article class="news-item">
-            <time class="news-date" datetime="2026-05-20">2026.05.20</time>
-            <div>
-              <h3>個人サイトのデザイン検討を開始</h3>
-              <p>余白、タイポグラフィ、事業領域ごとの見せ方を試しています。</p>
-            </div>
-          </article>
+          <h2 id="credits-title">Credits</h2>
+          <p class="section-lead">
+            CSSのみで構成した短編モーションページです。画像や動画ファイルを使わず、シルエット、フラッシュ、帯、粒子で映像的なテンションを作っています。
+          </p>
         </div>
       </section>
     </main>
 
     <footer>
-      <span>Curiosity Studio</span>
-      <span>Unofficial design study page.</span>
+      <span>Kinetic Fragrance Film</span>
+      <span>Original motion study page.</span>
     </footer>
   </body>
 </html>
