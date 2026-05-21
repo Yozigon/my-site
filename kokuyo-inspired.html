@@ -3,19 +3,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kinetic Fragrance Film</title>
+    <title>Process Archive | Creator Video Community</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
       :root {
-        color-scheme: dark;
-        --bg: #060608;
-        --ink: #f7f3ea;
-        --muted: #b7afa6;
-        --red: #e5202a;
-        --gold: #d8a84d;
-        --blue: #335f99;
-        --green: #2e7b62;
-        --line: rgba(247, 243, 234, 0.18);
-        --panel: rgba(255, 255, 255, 0.08);
+        color-scheme: light;
+        --bg: #f5f3ee;
+        --bg-mid: #f3f0ea;
+        --bg-deep: #ede7df;
+        --card: rgba(255, 255, 255, 0.7);
+        --card-solid: #fbfaf7;
+        --line: rgba(0, 0, 0, 0.08);
+        --text: #1f2937;
+        --muted: #6b7280;
+        --soft: #9ca3af;
+        --blue: #3f6d8f;
+        --green: #587d67;
+        --red: #b95c4f;
+        --gold: #bd9047;
+        --ink: #111827;
+        --shadow: 0 18px 48px rgba(31, 41, 55, 0.08);
+        --radius: 8px;
       }
 
       * {
@@ -29,64 +39,58 @@
       body {
         margin: 0;
         min-width: 320px;
-        font-family: "Arial Black", "Noto Sans JP", system-ui, sans-serif;
-        color: var(--ink);
-        background: var(--bg);
-        line-height: 1.65;
+        font-family: Inter, "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background:
+          linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent 34%),
+          linear-gradient(180deg, var(--bg) 0%, var(--bg-mid) 48%, var(--bg-deep) 100%);
+        line-height: 1.7;
       }
 
       body::before {
-        position: fixed;
-        inset: 0;
-        z-index: -2;
-        content: "";
-        background:
-          linear-gradient(115deg, rgba(229, 32, 42, 0.18), transparent 36%),
-          linear-gradient(245deg, rgba(51, 95, 153, 0.22), transparent 42%),
-          #060608;
-      }
-
-      body::after {
         position: fixed;
         inset: 0;
         z-index: -1;
         pointer-events: none;
         content: "";
         background-image:
-          linear-gradient(rgba(247, 243, 234, 0.06) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(247, 243, 234, 0.05) 1px, transparent 1px);
-        background-size: 72px 72px;
-        animation: grid-shift 9s steps(8) infinite;
+          linear-gradient(rgba(31, 41, 55, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(31, 41, 55, 0.03) 1px, transparent 1px);
+        background-size: 56px 56px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 76%);
       }
 
       a {
         color: inherit;
       }
 
+      button,
+      input {
+        font: inherit;
+      }
+
       .site-header {
-        position: fixed;
+        position: sticky;
         top: 0;
-        left: 0;
         z-index: 20;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: auto minmax(260px, 560px) auto;
         gap: 20px;
-        width: 100%;
-        min-height: 72px;
-        padding: 0 28px;
+        align-items: center;
+        min-height: 74px;
+        padding: 12px 28px;
         border-bottom: 1px solid var(--line);
-        background: rgba(6, 6, 8, 0.72);
-        backdrop-filter: blur(18px);
+        background: rgba(245, 243, 238, 0.78);
+        backdrop-filter: blur(12px);
       }
 
       .brand {
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        font-weight: 900;
+        font-weight: 800;
         text-decoration: none;
-        text-transform: uppercase;
+        white-space: nowrap;
       }
 
       .brand-mark {
@@ -94,543 +98,622 @@
         width: 34px;
         height: 34px;
         place-items: center;
-        color: #060608;
-        background: var(--ink);
-        font-size: 0.85rem;
-        transform: rotate(-8deg);
-      }
-
-      .nav {
-        display: flex;
-        gap: 18px;
-        color: var(--muted);
-        font-family: system-ui, sans-serif;
-        font-size: 0.9rem;
-      }
-
-      .nav a {
-        text-decoration: none;
-      }
-
-      .nav a:hover {
-        color: var(--ink);
-      }
-
-      main {
-        overflow: hidden;
-      }
-
-      .film-hero {
-        position: relative;
-        min-height: 100svh;
-        padding: 118px 28px 34px;
-        overflow: hidden;
-      }
-
-      .film-stage {
-        position: absolute;
-        inset: 72px 0 0;
-        overflow: hidden;
-      }
-
-      .flash-panel {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        background: var(--ink);
-        mix-blend-mode: difference;
-        animation: flash-cut 8.4s steps(1) infinite;
-      }
-
-      .slash {
-        position: absolute;
-        width: 34vw;
-        min-width: 220px;
-        height: 118vh;
-        top: -8vh;
-        background: var(--red);
-        transform: skewX(-18deg) translateX(-120%);
-        opacity: 0.86;
-        animation: slash-run 4.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-      }
-
-      .slash.two {
-        width: 18vw;
-        min-width: 150px;
-        background: var(--gold);
-        animation-delay: 1.1s;
-        animation-duration: 5.4s;
-      }
-
-      .ribbon {
-        position: absolute;
-        left: 50%;
-        top: 48%;
-        width: 66vw;
-        min-width: 520px;
-        height: 26px;
-        border: 2px solid rgba(247, 243, 234, 0.55);
-        border-left: 0;
-        border-right: 0;
-        transform-origin: left center;
-        animation: ribbon-whip 3.2s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-      }
-
-      .ribbon::before,
-      .ribbon::after {
-        position: absolute;
-        inset: 8px 0 auto;
-        height: 3px;
-        content: "";
-        background: var(--red);
-      }
-
-      .ribbon::after {
-        inset: auto 0 8px;
-        background: var(--gold);
-      }
-
-      .kinetic-person {
-        position: absolute;
-        left: 50%;
-        bottom: 12%;
-        width: 190px;
-        height: 430px;
-        transform: translateX(-50%);
-        animation: body-thrash 2.1s cubic-bezier(0.73, 0, 0.27, 1) infinite;
-      }
-
-      .head,
-      .torso,
-      .arm,
-      .leg {
-        position: absolute;
-        background: var(--ink);
-        box-shadow: 12px 10px 0 rgba(229, 32, 42, 0.72);
-      }
-
-      .head {
-        left: 64px;
-        top: 0;
-        width: 58px;
-        height: 58px;
+        border: 1px solid var(--line);
         border-radius: 50%;
-        animation: head-snap 2.1s steps(4) infinite;
+        color: var(--card-solid);
+        background:
+          linear-gradient(135deg, var(--ink) 0 50%, transparent 50%),
+          linear-gradient(45deg, var(--blue) 0 50%, var(--gold) 50%);
+        font-size: 0.78rem;
+        font-weight: 800;
       }
 
-      .torso {
-        left: 72px;
-        top: 66px;
-        width: 48px;
-        height: 156px;
-        border-radius: 26px 26px 18px 18px;
-        transform-origin: center top;
-        animation: torso-bend 2.1s cubic-bezier(0.73, 0, 0.27, 1) infinite;
-      }
-
-      .arm {
-        left: 88px;
-        top: 84px;
-        width: 28px;
-        height: 150px;
-        border-radius: 18px;
-        transform-origin: 50% 12px;
-      }
-
-      .arm.left {
-        animation: left-arm 1.4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-      }
-
-      .arm.right {
-        animation: right-arm 1.4s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-      }
-
-      .leg {
-        left: 84px;
-        top: 204px;
-        width: 30px;
-        height: 180px;
-        border-radius: 18px;
-        transform-origin: 50% 14px;
-      }
-
-      .leg.left {
-        animation: left-leg 1.85s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-      }
-
-      .leg.right {
-        animation: right-leg 1.85s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-      }
-
-      .burst {
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        background: var(--ink);
-        transform: rotate(45deg);
-        opacity: 0;
-        animation: burst-out 3.8s linear infinite;
-      }
-
-      .burst:nth-child(1) { left: 12%; top: 20%; background: var(--red); animation-delay: 0s; }
-      .burst:nth-child(2) { left: 82%; top: 26%; background: var(--gold); animation-delay: 0.35s; }
-      .burst:nth-child(3) { left: 28%; top: 74%; background: var(--blue); animation-delay: 0.72s; }
-      .burst:nth-child(4) { left: 70%; top: 68%; background: var(--green); animation-delay: 1.08s; }
-      .burst:nth-child(5) { left: 46%; top: 18%; background: var(--ink); animation-delay: 1.44s; }
-      .burst:nth-child(6) { left: 8%; top: 58%; background: var(--gold); animation-delay: 1.82s; }
-
-      .hero-copy {
+      .header-search,
+      .hero-search {
         position: relative;
-        z-index: 3;
+      }
+
+      .header-search input,
+      .hero-search input {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.68);
+        outline: none;
+        transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      }
+
+      .header-search input {
+        padding: 0 48px 0 18px;
+      }
+
+      .hero-search input {
+        min-height: 58px;
+        padding: 0 58px 0 22px;
+        font-size: 1rem;
+      }
+
+      .header-search input:focus,
+      .hero-search input:focus {
+        border-color: rgba(63, 109, 143, 0.45);
+        background: rgba(255, 255, 255, 0.86);
+        box-shadow: 0 0 0 4px rgba(63, 109, 143, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        top: 50%;
+        right: 17px;
+        color: var(--soft);
+        transform: translateY(-50%);
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+      }
+
+      .icon-button,
+      .upload-button,
+      .play-button,
+      .filter-button {
+        border: 1px solid var(--line);
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.66);
+        cursor: pointer;
+        transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease, border-color 180ms ease;
+      }
+
+      .icon-button {
         display: grid;
-        align-content: end;
-        min-height: calc(100svh - 152px);
-        width: min(1160px, 100%);
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 50%;
+      }
+
+      .upload-button,
+      .play-button,
+      .filter-button {
+        min-height: 42px;
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .upload-button {
+        padding: 0 16px;
+      }
+
+      .profile {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border: 1px solid rgba(0, 0, 0, 0.09);
+        border-radius: 50%;
+        color: #ffffff;
+        background: var(--green);
+        font-weight: 800;
+      }
+
+      .icon-button:hover,
+      .upload-button:hover,
+      .play-button:hover,
+      .filter-button:hover,
+      .video-card:hover {
+        transform: translateY(-3px);
+      }
+
+      .page-shell {
+        width: min(1280px, calc(100% - 48px));
         margin: 0 auto;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+        gap: 48px;
+        align-items: end;
+        padding: 82px 0 72px;
       }
 
       .eyebrow {
         margin: 0 0 14px;
-        color: var(--gold);
-        font-family: system-ui, sans-serif;
-        font-size: 0.86rem;
-        font-weight: 900;
+        color: var(--blue);
+        font-size: 0.78rem;
+        font-weight: 800;
         letter-spacing: 0;
         text-transform: uppercase;
       }
 
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
       h1 {
-        max-width: 900px;
-        margin: 0;
-        font-size: 7.6rem;
-        line-height: 0.86;
+        max-width: 760px;
+        margin-bottom: 24px;
+        font-size: 4.8rem;
+        line-height: 1.02;
         letter-spacing: 0;
-        text-transform: uppercase;
-        text-shadow: 8px 8px 0 rgba(229, 32, 42, 0.72);
-        animation: title-jolt 2.4s steps(2) infinite;
       }
 
       .lead {
         max-width: 640px;
-        margin: 26px 0 0;
+        margin-bottom: 28px;
         color: var(--muted);
-        font-family: system-ui, sans-serif;
-        font-size: 1.06rem;
+        font-size: 1.08rem;
       }
 
-      .hero-actions {
+      .popular-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 30px;
+        gap: 10px;
+        margin-top: 18px;
       }
 
-      .button {
+      .tag,
+      .meta-pill {
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        min-height: 46px;
-        padding: 10px 18px;
+        min-height: 32px;
+        padding: 6px 11px;
         border: 1px solid var(--line);
-        color: var(--ink);
-        background: rgba(255, 255, 255, 0.1);
-        font-family: system-ui, sans-serif;
-        font-weight: 900;
-        text-decoration: none;
+        border-radius: 999px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.54);
+        font-size: 0.83rem;
+        font-weight: 600;
       }
 
-      .button.primary {
-        color: #060608;
-        background: var(--ink);
-      }
-
-      .button:hover {
-        transform: translateY(-2px);
-      }
-
-      .ticker {
-        display: flex;
-        gap: 40px;
-        padding: 16px 0;
+      .featured-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: var(--shadow);
         overflow: hidden;
-        border-block: 1px solid var(--line);
-        color: var(--red);
-        background: var(--ink);
-        font-size: 1.3rem;
-        font-weight: 900;
-        text-transform: uppercase;
       }
 
-      .ticker-track {
+      .featured-player {
+        position: relative;
+        display: grid;
+        min-height: 382px;
+        place-items: center;
+        overflow: hidden;
+        background:
+          linear-gradient(135deg, rgba(63, 109, 143, 0.86), rgba(88, 125, 103, 0.74)),
+          #d7dbd3;
+      }
+
+      .featured-player::before {
+        position: absolute;
+        inset: 32px;
+        content: "";
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        background:
+          linear-gradient(90deg, transparent 48%, rgba(255, 255, 255, 0.3) 48% 52%, transparent 52%),
+          linear-gradient(180deg, transparent 48%, rgba(255, 255, 255, 0.22) 48% 52%, transparent 52%);
+      }
+
+      .featured-player::after {
+        position: absolute;
+        right: 44px;
+        bottom: 38px;
+        width: 42%;
+        height: 34%;
+        content: "";
+        background: rgba(245, 243, 238, 0.42);
+        clip-path: polygon(0 100%, 28% 12%, 54% 66%, 76% 0, 100% 100%);
+      }
+
+      .player-ring {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        width: 86px;
+        height: 86px;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.26);
+        backdrop-filter: blur(10px);
+      }
+
+      .play-shape {
+        width: 0;
+        height: 0;
+        margin-left: 6px;
+        border-top: 13px solid transparent;
+        border-bottom: 13px solid transparent;
+        border-left: 20px solid #ffffff;
+      }
+
+      .time-badge {
+        position: absolute;
+        right: 18px;
+        bottom: 16px;
+        z-index: 2;
+        padding: 5px 9px;
+        border-radius: 4px;
+        color: #ffffff;
+        background: rgba(17, 24, 39, 0.72);
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .featured-info {
+        display: grid;
+        gap: 18px;
+        padding: 26px;
+      }
+
+      .featured-info h2 {
+        margin-bottom: 0;
+        font-size: 1.75rem;
+        line-height: 1.25;
+      }
+
+      .featured-info p {
+        margin-bottom: 0;
+        color: var(--muted);
+      }
+
+      .featured-meta,
+      .creator-row {
         display: flex;
-        flex: 0 0 auto;
-        gap: 40px;
-        min-width: 100%;
-        animation: ticker-slide 15s linear infinite;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .creator-avatar {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 50%;
+        color: #ffffff;
+        background: var(--ink);
+        font-size: 0.84rem;
+        font-weight: 800;
+      }
+
+      .creator-row strong {
+        display: block;
+        line-height: 1.2;
+      }
+
+      .creator-row span {
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .play-button {
+        width: fit-content;
+        padding: 0 18px;
+        color: #ffffff;
+        background: var(--ink);
       }
 
       .section {
-        width: min(1160px, calc(100% - 48px));
-        margin: 0 auto;
-        padding: 88px 0;
-        border-bottom: 1px solid var(--line);
+        padding: 34px 0 84px;
       }
 
       .section-header {
-        display: grid;
-        grid-template-columns: minmax(160px, 0.34fr) minmax(0, 1fr);
-        gap: 32px;
-        margin-bottom: 36px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 28px;
       }
 
-      h2 {
-        margin: 0;
-        font-size: 1rem;
-        text-transform: uppercase;
+      .section-header h2 {
+        margin-bottom: 8px;
+        font-size: 2.05rem;
+        line-height: 1.18;
       }
 
-      .section-lead {
-        max-width: 760px;
-        margin: 0;
+      .section-header p {
+        max-width: 620px;
+        margin-bottom: 0;
         color: var(--muted);
-        font-family: system-ui, sans-serif;
-        font-size: 1.12rem;
       }
 
-      .motion-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        border-top: 1px solid var(--line);
-        border-left: 1px solid var(--line);
+      .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
-      .motion-card {
-        min-height: 260px;
-        padding: 24px;
-        border-right: 1px solid var(--line);
-        border-bottom: 1px solid var(--line);
-        background: var(--panel);
-      }
-
-      .motion-card span {
-        color: var(--gold);
-        font-size: 0.8rem;
-        font-weight: 900;
-      }
-
-      .motion-card h3 {
-        margin: 58px 0 12px;
-        font-size: 1.5rem;
-        line-height: 1.1;
-        text-transform: uppercase;
-      }
-
-      .motion-card p {
-        margin: 0;
+      .filter-button {
+        padding: 0 14px;
         color: var(--muted);
-        font-family: system-ui, sans-serif;
       }
 
-      .credit-band {
+      .filter-button.is-active {
+        color: #ffffff;
+        background: var(--ink);
+        border-color: var(--ink);
+      }
+
+      .video-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
-        gap: 36px;
-        align-items: center;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 22px;
       }
 
-      .credit-title {
-        margin: 0;
-        font-size: 4.8rem;
-        line-height: 0.95;
+      .video-card {
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: var(--card);
+        box-shadow: 0 12px 28px rgba(31, 41, 55, 0.04);
+        overflow: hidden;
+        transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, opacity 260ms ease;
+      }
+
+      .video-card:hover {
+        border-color: rgba(31, 41, 55, 0.16);
+        box-shadow: 0 20px 46px rgba(31, 41, 55, 0.11);
+      }
+
+      .thumbnail {
+        position: relative;
+        aspect-ratio: 16 / 10;
+        overflow: hidden;
+        background: #d8d4cc;
+      }
+
+      .thumbnail::before {
+        position: absolute;
+        inset: 0;
+        content: "";
+        transition: transform 420ms ease;
+      }
+
+      .video-card:hover .thumbnail::before {
+        transform: scale(1.06);
+      }
+
+      .thumb-architecture::before {
+        background:
+          linear-gradient(90deg, transparent 0 12%, rgba(255, 255, 255, 0.72) 12% 22%, transparent 22% 42%, rgba(255, 255, 255, 0.42) 42% 50%, transparent 50%),
+          linear-gradient(135deg, #c8c6be, #8fa1a6);
+      }
+
+      .thumb-motion::before {
+        background:
+          repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0 12px, transparent 12px 32px),
+          linear-gradient(135deg, #566f8f, #d8a84d);
+      }
+
+      .thumb-animation::before {
+        background:
+          radial-gradient(circle at 24% 35%, #f5f3ee 0 12%, transparent 13%),
+          radial-gradient(circle at 68% 58%, rgba(185, 92, 79, 0.76) 0 15%, transparent 16%),
+          linear-gradient(135deg, #d5cbc0, #587d67);
+      }
+
+      .thumb-workflow::before {
+        background:
+          linear-gradient(90deg, rgba(31, 41, 55, 0.18) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(31, 41, 55, 0.18) 1px, transparent 1px),
+          linear-gradient(135deg, #e8e3da, #c7d0c5);
+        background-size: 34px 34px, 34px 34px, auto;
+      }
+
+      .thumb-sound::before {
+        background:
+          repeating-linear-gradient(90deg, transparent 0 18px, rgba(255, 255, 255, 0.7) 18px 24px),
+          linear-gradient(135deg, #1f2937, #3f6d8f 58%, #c0b49f);
+      }
+
+      .thumb-daily::before {
+        background:
+          linear-gradient(160deg, transparent 0 44%, rgba(255, 255, 255, 0.52) 44% 62%, transparent 62%),
+          linear-gradient(135deg, #e9dfd1, #bd9047);
+      }
+
+      .video-duration {
+        position: absolute;
+        right: 12px;
+        bottom: 10px;
+        z-index: 2;
+        padding: 4px 7px;
+        border-radius: 4px;
+        color: #ffffff;
+        background: rgba(17, 24, 39, 0.72);
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .card-body {
+        padding: 18px;
+      }
+
+      .category {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 0.76rem;
+        font-weight: 800;
         text-transform: uppercase;
       }
 
-      .credit-panel {
+      .video-card h3 {
+        margin-bottom: 12px;
+        font-size: 1.05rem;
+        line-height: 1.35;
+      }
+
+      .video-meta {
+        display: grid;
+        gap: 4px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .archive-note {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 54px;
+      }
+
+      .note-card {
         padding: 28px;
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.08);
-        font-family: system-ui, sans-serif;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.48);
       }
 
-      .credit-panel p {
-        margin: 0 0 18px;
+      .note-card h3 {
+        margin-bottom: 12px;
+        font-size: 1.25rem;
+      }
+
+      .note-card p {
+        margin-bottom: 0;
         color: var(--muted);
-      }
-
-      .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--gold);
-        font-weight: 900;
-        text-decoration: none;
       }
 
       footer {
         display: flex;
         justify-content: space-between;
         gap: 24px;
-        padding: 34px 28px;
+        width: min(1280px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 34px 0 46px;
+        border-top: 1px solid var(--line);
         color: var(--muted);
-        font-family: system-ui, sans-serif;
         font-size: 0.92rem;
       }
 
-      @keyframes grid-shift {
-        50% { transform: translate3d(-36px, 36px, 0); }
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 640ms ease, transform 640ms ease;
       }
 
-      @keyframes flash-cut {
-        0%, 12%, 100% { opacity: 0; }
-        13%, 14%, 42%, 43%, 76%, 77% { opacity: 0.82; }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
-      @keyframes slash-run {
-        0% { transform: skewX(-18deg) translateX(-135%); }
-        42%, 54% { transform: skewX(-18deg) translateX(130%); }
-        100% { transform: skewX(-18deg) translateX(130%); }
+      .video-card.is-hidden {
+        display: none;
       }
 
-      @keyframes ribbon-whip {
-        0% { transform: translate(-50%, -50%) rotate(-18deg) scaleX(0.2); opacity: 0; }
-        25% { opacity: 1; }
-        48% { transform: translate(-50%, -50%) rotate(14deg) scaleX(1.12); }
-        72% { transform: translate(-50%, -50%) rotate(-8deg) scaleX(0.64); opacity: 0.78; }
-        100% { transform: translate(-50%, -50%) rotate(22deg) scaleX(0); opacity: 0; }
+      .video-card.is-filtering {
+        animation: card-enter 340ms ease both;
       }
 
-      @keyframes body-thrash {
-        0%, 100% { transform: translateX(-50%) rotate(-4deg) translateY(0); }
-        24% { transform: translateX(-50%) rotate(18deg) translateY(-22px); }
-        42% { transform: translateX(-50%) rotate(-22deg) translateY(18px); }
-        62% { transform: translateX(-50%) rotate(10deg) translateY(-34px); }
-        82% { transform: translateX(-50%) rotate(-12deg) translateY(10px); }
+      @keyframes card-enter {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
-      @keyframes head-snap {
-        0%, 100% { transform: translateX(0) rotate(0); }
-        25% { transform: translateX(-34px) rotate(-18deg); }
-        50% { transform: translateX(26px) rotate(20deg); }
-        75% { transform: translateX(-10px) rotate(-10deg); }
-      }
-
-      @keyframes torso-bend {
-        0%, 100% { transform: rotate(0); }
-        32% { transform: rotate(-28deg); }
-        58% { transform: rotate(24deg); }
-        78% { transform: rotate(-16deg); }
-      }
-
-      @keyframes left-arm {
-        0%, 100% { transform: rotate(118deg); }
-        28% { transform: rotate(-96deg); }
-        58% { transform: rotate(154deg); }
-        78% { transform: rotate(-36deg); }
-      }
-
-      @keyframes right-arm {
-        0%, 100% { transform: rotate(-116deg); }
-        28% { transform: rotate(84deg); }
-        58% { transform: rotate(-154deg); }
-        78% { transform: rotate(46deg); }
-      }
-
-      @keyframes left-leg {
-        0%, 100% { transform: rotate(20deg); }
-        34% { transform: rotate(-72deg); }
-        62% { transform: rotate(56deg); }
-      }
-
-      @keyframes right-leg {
-        0%, 100% { transform: rotate(-18deg); }
-        34% { transform: rotate(78deg); }
-        62% { transform: rotate(-58deg); }
-      }
-
-      @keyframes burst-out {
-        0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(45deg) scale(0.2); }
-        12% { opacity: 1; }
-        62% { opacity: 0.8; }
-        100% { opacity: 0; transform: translate3d(90px, -150px, 0) rotate(540deg) scale(2.2); }
-      }
-
-      @keyframes title-jolt {
-        0%, 100% { transform: translate3d(0, 0, 0); }
-        20% { transform: translate3d(-8px, 5px, 0); }
-        42% { transform: translate3d(7px, -4px, 0); }
-        68% { transform: translate3d(-3px, -6px, 0); }
-      }
-
-      @keyframes ticker-slide {
-        to { transform: translateX(calc(-100% - 40px)); }
-      }
-
-      @media (max-width: 860px) {
+      @media (max-width: 1080px) {
         .site-header {
-          padding: 0 18px;
+          grid-template-columns: auto 1fr auto;
         }
 
-        .nav {
-          display: none;
-        }
-
-        .film-hero {
-          padding-inline: 18px;
+        .hero {
+          grid-template-columns: 1fr;
+          padding-top: 58px;
         }
 
         h1 {
-          font-size: 4.2rem;
+          font-size: 3.8rem;
         }
 
-        .kinetic-person {
-          bottom: 18%;
-          transform: translateX(-50%) scale(0.82);
+        .video-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 760px) {
+        .site-header {
+          grid-template-columns: 1fr auto;
+          padding: 10px 18px;
         }
 
-        .section {
-          width: calc(100% - 36px);
-          padding: 64px 0;
+        .header-search {
+          grid-column: 1 / -1;
+          order: 3;
+        }
+
+        .header-actions {
+          gap: 8px;
+        }
+
+        .upload-button {
+          display: none;
+        }
+
+        .page-shell,
+        footer {
+          width: calc(100% - 32px);
+        }
+
+        .hero {
+          padding: 46px 0 56px;
+        }
+
+        h1 {
+          font-size: 2.7rem;
+        }
+
+        .featured-player {
+          min-height: 290px;
         }
 
         .section-header,
-        .credit-band {
+        .archive-note {
+          display: grid;
           grid-template-columns: 1fr;
         }
 
-        .motion-grid {
+        .video-grid {
           grid-template-columns: 1fr;
-        }
-
-        .credit-title {
-          font-size: 3.2rem;
         }
 
         footer {
           display: grid;
-          padding: 28px 18px;
         }
       }
 
-      @media (max-width: 520px) {
+      @media (max-width: 460px) {
+        .brand span:last-child {
+          max-width: 148px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
         h1 {
-          font-size: 3.05rem;
+          font-size: 2.28rem;
         }
 
-        .lead {
-          font-size: 1rem;
+        .icon-button {
+          width: 38px;
+          height: 38px;
         }
 
-        .kinetic-person {
-          left: 58%;
-          transform: translateX(-50%) scale(0.72);
-        }
-
-        .ribbon {
-          min-width: 360px;
-        }
-
-        .motion-card {
-          min-height: 220px;
+        .profile {
+          width: 38px;
+          height: 38px;
         }
       }
 
@@ -648,130 +731,323 @@
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="index.html" aria-label="Kinetic Fragrance Film home">
-        <span class="brand-mark" aria-hidden="true">KF</span>
-        <span>Kinetic Fragrance Film</span>
+      <a class="brand" href="index.html" aria-label="Process Archive home">
+        <span class="brand-mark" aria-hidden="true">PA</span>
+        <span>Process Archive</span>
       </a>
-      <nav class="nav" aria-label="ページ内ナビゲーション">
-        <a href="#movement">Movement</a>
-        <a href="#reference">Reference</a>
-        <a href="#credits">Credits</a>
-      </nav>
+
+      <label class="header-search" aria-label="動画を検索">
+        <input type="search" placeholder="Search films, notes, creators">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+      </label>
+
+      <div class="header-actions">
+        <button class="upload-button" type="button">Upload</button>
+        <button class="icon-button" type="button" aria-label="Notifications">!</button>
+        <span class="profile" aria-label="Profile">N</span>
+      </div>
     </header>
 
-    <main>
-      <section class="film-hero" aria-labelledby="hero-title">
-        <div class="film-stage" aria-hidden="true">
-          <div class="flash-panel"></div>
-          <div class="slash"></div>
-          <div class="slash two"></div>
-          <div class="ribbon"></div>
-          <div class="kinetic-person">
-            <span class="head"></span>
-            <span class="torso"></span>
-            <span class="arm left"></span>
-            <span class="arm right"></span>
-            <span class="leg left"></span>
-            <span class="leg right"></span>
-          </div>
-          <span class="burst"></span>
-          <span class="burst"></span>
-          <span class="burst"></span>
-          <span class="burst"></span>
-          <span class="burst"></span>
-          <span class="burst"></span>
-        </div>
-
-        <div class="hero-copy">
-          <p class="eyebrow">Perfume commercial study</p>
-          <h1 id="hero-title">Break the elegant silence.</h1>
+    <main class="page-shell">
+      <section class="hero reveal" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Creator video community</p>
+          <h1 id="hero-title">アイデアと制作の過程が集まる場所。</h1>
           <p class="lead">
-            静かな会場から突然はじけ出す身体表現、予測不能なカット、香りが空間を切り裂くようなスピード感を、Webページ上のモーションとして再構成しました。
+            完成作品だけでなく、試作、編集画面、音づくり、日々の制作ログまで。静かなギャラリーのように映像を集めるクリエイター向けコミュニティです。
           </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#movement">モーションを見る</a>
-            <a class="button" href="#reference">参考メモ</a>
+
+          <label class="hero-search" aria-label="動画を検索">
+            <input type="search" placeholder="Architecture, workflow, motion study...">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+          </label>
+
+          <div class="popular-tags" aria-label="人気タグ">
+            <span class="tag">Architecture</span>
+            <span class="tag">Motion Design</span>
+            <span class="tag">Animation</span>
+            <span class="tag">Creative Workflow</span>
+            <span class="tag">Sound</span>
+            <span class="tag">Daily Log</span>
           </div>
         </div>
+
+        <article class="featured-card" aria-labelledby="featured-title">
+          <div class="featured-player">
+            <span class="player-ring" aria-hidden="true"><span class="play-shape"></span></span>
+            <span class="time-badge">12:48</span>
+          </div>
+          <div class="featured-info">
+            <div>
+              <p class="eyebrow">Featured video</p>
+              <h2 id="featured-title">Light Study for a Quiet Apartment</h2>
+            </div>
+            <p>
+              午後の自然光を使った建築映像の制作ログ。撮影前の空間観察、カメラ位置、色調整までを短い章で記録しています。
+            </p>
+            <div class="featured-meta" aria-label="タグ">
+              <span class="meta-pill">Architecture</span>
+              <span class="meta-pill">Color Grading</span>
+              <span class="meta-pill">Process</span>
+            </div>
+            <div class="creator-row">
+              <span class="creator-avatar">AK</span>
+              <div>
+                <strong>Aki Nakamura</strong>
+                <span>34K views · 2 days ago</span>
+              </div>
+            </div>
+            <button class="play-button" type="button">Play featured</button>
+          </div>
+        </article>
       </section>
 
-      <div class="ticker" aria-hidden="true">
-        <div class="ticker-track">
-          <span>Impulse</span>
-          <span>Fragrance</span>
-          <span>Gesture</span>
-          <span>Red Cut</span>
-          <span>Wild Grace</span>
-        </div>
-        <div class="ticker-track">
-          <span>Impulse</span>
-          <span>Fragrance</span>
-          <span>Gesture</span>
-          <span>Red Cut</span>
-          <span>Wild Grace</span>
-        </div>
-      </div>
-
-      <section class="section" id="movement" aria-labelledby="movement-title">
+      <section class="section reveal" aria-labelledby="videos-title">
         <div class="section-header">
-          <h2 id="movement-title">Movement</h2>
-          <p class="section-lead">
-            上品さを保ったまま、急に暴れる。香水広告らしい余白と、ミュージックビデオのような衝撃を同居させるための演出要素です。
-          </p>
-        </div>
-
-        <div class="motion-grid">
-          <article class="motion-card">
-            <span>01</span>
-            <h3>Flash cut</h3>
-            <p>一瞬だけ画面を反転させ、まばたきのような強い切り替えを入れています。</p>
-          </article>
-          <article class="motion-card">
-            <span>02</span>
-            <h3>Body snap</h3>
-            <p>シルエットの頭、腕、脚を別々に振り、制御不能なダンスの勢いを出しています。</p>
-          </article>
-          <article class="motion-card">
-            <span>03</span>
-            <h3>Color slash</h3>
-            <p>赤と金の大きな面が横切ることで、香りの軌跡や衝動を視覚化しています。</p>
-          </article>
-          <article class="motion-card">
-            <span>04</span>
-            <h3>Broken stage</h3>
-            <p>整ったグリッドの上で動きだけが暴れる構成にし、上品さと破壊力を両立させています。</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="reference" aria-labelledby="reference-title">
-        <div class="credit-band">
-          <h2 class="credit-title" id="reference-title">A wild note for a fragrance film.</h2>
-          <div class="credit-panel">
-            <p>
-              参考にしたのは、Margaret Qualley が出演した KENZO WORLD の香水CMにある、エレガントな場から激しい身体表現へ飛び込むコントラストです。
-            </p>
-            <p>
-              このページでは既存映像の再現ではなく、Web用に抽象化したオリジナルの動きとして表現しています。
-            </p>
-            <a class="text-link" href="index.html">Back to community <span aria-hidden="true">→</span></a>
+          <div>
+            <p class="eyebrow">Latest archive</p>
+            <h2 id="videos-title">制作ログと作品</h2>
+            <p>動画を探すというより、棚を眺めるように発見できるアーカイブです。</p>
+          </div>
+          <div class="filters" aria-label="カテゴリフィルター">
+            <button class="filter-button is-active" type="button" data-filter="all">All</button>
+            <button class="filter-button" type="button" data-filter="Architecture">Architecture</button>
+            <button class="filter-button" type="button" data-filter="Motion Design">Motion</button>
+            <button class="filter-button" type="button" data-filter="Animation">Animation</button>
+            <button class="filter-button" type="button" data-filter="Creative Workflow">Workflow</button>
+            <button class="filter-button" type="button" data-filter="Sound">Sound</button>
+            <button class="filter-button" type="button" data-filter="Daily Log">Daily Log</button>
           </div>
         </div>
-      </section>
 
-      <section class="section" id="credits" aria-labelledby="credits-title">
-        <div class="section-header">
-          <h2 id="credits-title">Credits</h2>
-          <p class="section-lead">
-            CSSのみで構成した短編モーションページです。画像や動画ファイルを使わず、シルエット、フラッシュ、帯、粒子で映像的なテンションを作っています。
-          </p>
+        <div class="video-grid" id="videoGrid">
+          <article class="video-card reveal" data-category="Architecture">
+            <div class="thumbnail thumb-architecture">
+              <span class="video-duration">08:24</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Architecture</span>
+              <h3>Concrete lobby light test</h3>
+              <div class="video-meta">
+                <span>Studio North</span>
+                <span>18K views · 3 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Motion Design">
+            <div class="thumbnail thumb-motion">
+              <span class="video-duration">06:12</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Motion Design</span>
+              <h3>Poster grid moving in four tempos</h3>
+              <div class="video-meta">
+                <span>Mika Ito</span>
+                <span>42K views · 1 week ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Animation">
+            <div class="thumbnail thumb-animation">
+              <span class="video-duration">04:39</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Animation</span>
+              <h3>Soft loop studies with paper forms</h3>
+              <div class="video-meta">
+                <span>Frame Atelier</span>
+                <span>9.8K views · 5 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Creative Workflow">
+            <div class="thumbnail thumb-workflow">
+              <span class="video-duration">14:08</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Creative Workflow</span>
+              <h3>How I organize references before editing</h3>
+              <div class="video-meta">
+                <span>Haru Works</span>
+                <span>27K views · 2 weeks ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Sound">
+            <div class="thumbnail thumb-sound">
+              <span class="video-duration">10:31</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Sound</span>
+              <h3>Field recording for quiet product films</h3>
+              <div class="video-meta">
+                <span>Sound Shelf</span>
+                <span>12K views · 6 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Daily Log">
+            <div class="thumbnail thumb-daily">
+              <span class="video-duration">07:15</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Daily Log</span>
+              <h3>Morning edit notes and small revisions</h3>
+              <div class="video-meta">
+                <span>Yui Journal</span>
+                <span>6.4K views · yesterday</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Architecture">
+            <div class="thumbnail thumb-architecture">
+              <span class="video-duration">11:52</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Architecture</span>
+              <h3>Walking sequence through a small museum</h3>
+              <div class="video-meta">
+                <span>Line Space</span>
+                <span>31K views · 4 weeks ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Motion Design">
+            <div class="thumbnail thumb-motion">
+              <span class="video-duration">03:58</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Motion Design</span>
+              <h3>Type transitions for a calm launch film</h3>
+              <div class="video-meta">
+                <span>After Studio</span>
+                <span>22K views · 8 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Animation">
+            <div class="thumbnail thumb-animation">
+              <span class="video-duration">05:44</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Animation</span>
+              <h3>Character walk cycle without cleanup</h3>
+              <div class="video-meta">
+                <span>Loop Room</span>
+                <span>15K views · 10 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Creative Workflow">
+            <div class="thumbnail thumb-workflow">
+              <span class="video-duration">18:20</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Creative Workflow</span>
+              <h3>Building a weekly production board</h3>
+              <div class="video-meta">
+                <span>Noted Motion</span>
+                <span>38K views · 3 weeks ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Sound">
+            <div class="thumbnail thumb-sound">
+              <span class="video-duration">09:26</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Sound</span>
+              <h3>Minimal room tone for interview edits</h3>
+              <div class="video-meta">
+                <span>Quiet Mix</span>
+                <span>8.1K views · 12 days ago</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="video-card reveal" data-category="Daily Log">
+            <div class="thumbnail thumb-daily">
+              <span class="video-duration">12:03</span>
+            </div>
+            <div class="card-body">
+              <span class="category">Daily Log</span>
+              <h3>One desk, three short editing sessions</h3>
+              <div class="video-meta">
+                <span>Rin Archive</span>
+                <span>5.9K views · 1 month ago</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="archive-note reveal">
+          <article class="note-card">
+            <h3>作品よりも、過程を見つける。</h3>
+            <p>完成形だけでなく、途中の判断、迷い、試作を残せる場所として設計しています。</p>
+          </article>
+          <article class="note-card">
+            <h3>静かなコミュニティ。</h3>
+            <p>再生数の強さよりも、制作の文脈や作者の視点をゆっくり辿れるUIです。</p>
+          </article>
         </div>
       </section>
     </main>
 
     <footer>
-      <span>Kinetic Fragrance Film</span>
-      <span>Original motion study page.</span>
+      <span>Process Archive</span>
+      <span>Creator video community concept.</span>
     </footer>
+
+    <script>
+      const revealItems = document.querySelectorAll(".reveal");
+      const filterButtons = document.querySelectorAll("[data-filter]");
+      const videoCards = document.querySelectorAll(".video-card");
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12
+      });
+
+      revealItems.forEach((item, index) => {
+        item.style.transitionDelay = `${Math.min(index * 45, 240)}ms`;
+        revealObserver.observe(item);
+      });
+
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const filter = button.dataset.filter;
+
+          filterButtons.forEach((item) => item.classList.remove("is-active"));
+          button.classList.add("is-active");
+
+          videoCards.forEach((card, index) => {
+            const isMatch = filter === "all" || card.dataset.category === filter;
+            card.classList.toggle("is-hidden", !isMatch);
+            card.classList.remove("is-filtering");
+
+            if (isMatch) {
+              card.style.animationDelay = `${Math.min(index * 35, 220)}ms`;
+              requestAnimationFrame(() => card.classList.add("is-filtering"));
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
